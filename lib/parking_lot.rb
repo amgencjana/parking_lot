@@ -30,6 +30,13 @@ module ParkingLot
       return position
     end
 
+    def release(position)
+      return false unless slots[position-1]
+      
+      slots[position-1] = nil 
+      true
+    end
+
     def find_free_spot
       return false if parking_full?
       slots.index(nil) + 1

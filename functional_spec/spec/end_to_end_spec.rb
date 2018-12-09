@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe 'End To End Suite', type: :aruba do
-  xit "has aruba set up" do
+  it "has aruba set up" do
     command = run "echo 'hello world'"
     stop_all_commands
     expect(command.output).to eq("hello world\n")

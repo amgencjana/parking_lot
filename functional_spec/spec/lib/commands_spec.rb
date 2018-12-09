@@ -1,8 +1,14 @@
 require 'spec_helper'
 
+
 RSpec.describe 'Commands', type: :aruba do
-  it 'loads properly Commands' do 
-  
+
+  describe 'loads properly Commands' do 
+    subject { ParkingLot::CommandStrategy::AVAILABLE_COMMANDS }
+    
+    it { is_expected.to include(ParkingLot::Commands::CreateParkingLotCommand) }
+    it { is_expected.to include(ParkingLot::Commands::ParkCar) }
+    it { is_expected.to include(ParkingLot::Commands::LeavePosition) }
   end
 
   describe 'CommandsStrategy' do 
@@ -10,7 +16,6 @@ RSpec.describe 'Commands', type: :aruba do
 
     describe 'Create Parking Lot Command' do 
       let(:command_txt) { 'create_parking_lot 6'}
-      subject { ParkingLot::CommandStrategy.new(command_txt) }
 
       it 'public interface' do
         expect(subject).to respond_to(:command)
@@ -37,7 +42,7 @@ RSpec.describe 'Commands', type: :aruba do
 
       context 'Park multiple cars' do
         let(:create_parking) { 'create_parking_lot 6'}
-        let(:park_car_1) { 'park AMG_C63 White'}
+        let(:park_car_1)  { 'park AMG_C63 White'}
         let(:command_txt) { 'park BMW_430 Silver'}
         before do 
           ParkingLot::CommandStrategy.new(create_parking).command.execute 
@@ -48,6 +53,42 @@ RSpec.describe 'Commands', type: :aruba do
         end
       end
     end
+
+    describe 'Leave Position Command' do 
+      let(:command_txt) { 'leave 2' }
+
+      it 'finds proper Command based on the input' do
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::LeavePosition)
+        expect(subject.command.execute).to eql("Slot number 2 is free\n")
+      end
+
+      context 'Leave already parked multiple cars' do
+        let(:create_parking) { 'create_parking_lot 6'}
+        let(:park_car_1)  { 'park AMG_C63 White'}
+        let(:park_car_2)  { 'park BMW_430 Silver'}
+        before do 
+          ParkingLot::CommandStrategy.new(create_parking).command.execute 
+          ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+          ParkingLot::CommandStrategy.new(park_car_2).command.execute 
+        end
+
+        it 'prints out proper output message' do
+          expect(subject.command.execute).to eql("Slot number 2 is free\n")
+        end
+
+        context 'Position is not occupated' do 
+          let(:command_txt) { 'leave 5' }
+          
+          it 'prints out proper output message' do
+            expect(subject.command.execute).to eql("No Car on this position\n")
+          end
+        end
+
+
+      end
+    end
+
+   
   end
 
   

@@ -1,5 +1,7 @@
-require_relative 'commands/park_car'
 require_relative 'commands/create_parking_lot_command'
+require_relative 'commands/park_car'
+require_relative 'commands/leave_position'
+
 
 module ParkingLot
 
@@ -9,7 +11,7 @@ module ParkingLot
   # usage of the Open Close principle allows to make in the easy way extend number of commands 
   # and ease of handling different variants of existing ones 
   class CommandStrategy
-    AVAILABLE_COMMANDS = [ Commands::CreateParkingLotCommand, Commands::ParkCar ]
+    AVAILABLE_COMMANDS = [ Commands::CreateParkingLotCommand, Commands::ParkCar, Commands::LeavePosition  ]
 
     attr_accessor :command_txt, :commands
 

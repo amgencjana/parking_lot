@@ -94,40 +94,37 @@ RSpec.describe ParkingLot::CommandStrategy, type: :aruba do
     end
 
     describe 'Status Command' do 
-      let(:command_txt) { 'leave 2' }
+      let(:command_txt) { 'status' }
 
       it 'finds proper Command based on the input' do
-        expect(subject.command).to be_kind_of(ParkingLot::Commands::LeavePosition)
-        expect(subject.command.execute).to eql("Slot number 2 is free\n")
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::Status)
       end
 
-      context 'Leave already parked multiple cars' do
+      describe 'Print out status of parked cars' do
         let(:create_parking) { 'create_parking_lot 6'}
         let(:park_car_1)  { 'park AMG_C63 White'}
         let(:park_car_2)  { 'park BMW_430 Silver'}
-        let(:park_car_3)  { 'park BMW_M5 Silver'}
-        let(:park_car_4)  { 'park AMG_S63 Silver'}
+        let(:park_car_3)  { 'park BMW_M5 Gold'}
+        
         before do 
           ParkingLot::CommandStrategy.new(create_parking).command.execute 
           ParkingLot::CommandStrategy.new(park_car_1).command.execute 
           ParkingLot::CommandStrategy.new(park_car_2).command.execute 
           ParkingLot::CommandStrategy.new(park_car_3).command.execute 
-          ParkingLot::CommandStrategy.new(park_car_4).command.execute 
+        end
+       
+       let(:report) do
+<<-STATUSTEXT
+Slot No.    Registration No    Colour
+1           AMG_C63            White
+2           BMW_430            Silver
+3           BMW_M5             Gold
+STATUSTEXT
         end
 
         it 'prints out proper output message' do
-
-          expect(subject.command.execute).to eql("Slot number 2 is free\n")
+          expect(subject.command.execute).to eql(report)
         end
-
-        context 'Position is not occupated' do 
-          let(:command_txt) { 'leave 5' }
-          
-          it 'prints out proper output message' do
-            expect(subject.command.execute).to eql("No Car on this position\n")
-          end
-        end
-
       end
     end
    

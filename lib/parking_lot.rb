@@ -1,5 +1,6 @@
 require_relative 'parking_lot/command'
 require_relative 'parking_lot/command_strategy'
+require_relative 'parking_lot/report'
 
 require 'ostruct'
 
@@ -26,6 +27,8 @@ module ParkingLot
 
     def allocate(car)
       position = find_free_spot
+      car[:position] = position
+
       @slots[position - 1] = car 
       return position
     end

@@ -6,7 +6,11 @@ require 'ostruct'
 module ParkingLot
 
   class Parking
-    attr_accessor :number_of_slots, :slots
+    attr_accessor :number_of_slots, :slots, :payload
+
+    def self.current
+      $parking
+    end
 
     def initialize(number_of_slots)
       @number_of_slots = number_of_slots
@@ -16,10 +20,14 @@ module ParkingLot
     # global variable:
     # used for sake of simplification and not involving persistant layer 
     def save 
-      $parking = OpenStruct.new(number_of_slots: @number_of_slots)
+      @payload = OpenStruct.new(number_of_slots: @number_of_slots, slots: @slots)
+      $parking = self
     end
 
-    def allocate
+    def allocate(car)
+      position = find_free_spot
+      @slots[position - 1] = car 
+      return position
     end
 
     def find_free_spot

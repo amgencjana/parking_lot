@@ -9,7 +9,7 @@ module ParkingLot
   # usage of the Open Close principle allows to make in the easy way extend number of commands 
   # and ease of handling different variants of existing ones 
   class CommandStrategy
-    AVAILABLE_COMMANDS = [ Commands::CreateParkingLotCommand ]
+    AVAILABLE_COMMANDS = [ Commands::CreateParkingLotCommand, Commands::ParkCar ]
 
     attr_accessor :command_txt, :commands
 

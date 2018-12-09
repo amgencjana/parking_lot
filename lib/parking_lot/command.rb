@@ -14,9 +14,8 @@ module ParkingLot
       while 1 do
         cmd = STDIN.gets.chomp 
 
-        command = ParkingLot::CommandStrategy.new(cmd)
-        puts      command.execute
-
+        puts ParkingLot::CommandStrategy.new(cmd).command.execute
+              
         break if cmd == 'exit'
       end
     end

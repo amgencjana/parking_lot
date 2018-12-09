@@ -6,6 +6,7 @@ RSpec.describe 'Commands', type: :aruba do
   end
 
   describe 'CommandsStrategy' do 
+    subject { ParkingLot::CommandStrategy.new(command_txt) }
 
     describe 'Create Parking Lot Command' do 
       let(:command_txt) { 'create_parking_lot 6'}
@@ -18,15 +19,38 @@ RSpec.describe 'Commands', type: :aruba do
       it 'finds proper Command based on the input' do
         expect(subject.command).to be_kind_of(ParkingLot::Commands::CreateParkingLotCommand)
       end
+    end
 
+    describe 'Park a Car Command' do 
+      let(:create_parking) { 'create_parking_lot 6'}
+      
+      before do 
+        ParkingLot::CommandStrategy.new(create_parking).command.execute
+      end
+
+      let(:command_txt) { 'park AMG_C63 White'}
+
+      it 'finds proper Command based on the input' do
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::ParkCar)
+        expect(subject.command.execute).to eql("Allocated slot number: 1\n")
+      end
+
+      context 'Park multiple cars' do
+        let(:create_parking) { 'create_parking_lot 6'}
+        let(:park_car_1) { 'park AMG_C63 White'}
+        let(:command_txt) { 'park BMW_430 Silver'}
+        before do 
+          ParkingLot::CommandStrategy.new(create_parking).command.execute 
+          ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+        end
+        it 'finds proper Command based on the input' do
+          expect(subject.command.execute).to eql("Allocated slot number: 2\n")
+        end
+      end
     end
   end
 
-  xit "has aruba set up" do
-    command = run "echo 'hello world'"
-    stop_all_commands
-    expect(command.output).to eq("hello world\n")
-  end
+  
 
   describe "full scenarios" do
     let(:commands) do

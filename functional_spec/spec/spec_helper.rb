@@ -4,10 +4,6 @@ require "pry"
 
 require_relative '../../lib/parking_lot'
 
-
-# require "lib/commands_spec"
-# require "lib/create_parking_lot_command_spec"
-
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"

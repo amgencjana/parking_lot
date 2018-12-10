@@ -1,6 +1,8 @@
 module ParkingLot
-  
+  # Report
+  # 
   # Class Responsible for printing formatted status
+  # 
   class Report
     
     attr_accessor :data

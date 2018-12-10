@@ -17,12 +17,9 @@ module ParkingLot
 
       def execute
         parking = Parking.current
+        leave_service = Services::LeavePositionService.new(parking, position)
 
-        if parking.release(@position)
-          "Slot number #{position} is free\n"
-        else
-          "No Car on this position\n"
-        end
+        leave_service.leave!
       end
 
       private

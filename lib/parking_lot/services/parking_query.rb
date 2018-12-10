@@ -12,15 +12,17 @@ module ParkingLot
     # from ($) global variable to any choosen ORM, ensuring that rest of program
     # use same interface, only implemention per data-storage will be different 
     class ParkingQuery
-      attr_accessor :parking, :color, :data
+      attr_accessor :parking, :color, :data, :license_plate
 
       def initialize(parking, args)
-        @parking = parking 
-        @data    = parking.slots
-        @color    = args.fetch(:color){ '' }  
+        @parking       = parking 
+        @data          = parking.slots
+        @color         = args.fetch(:color){ '' }  
+        @license_plate = args.fetch(:license_plate){ '' }
       end
 
       def cars
+        return cars_by_license_plate unless @license_plate.empty?
         cars_by_color
       end
 
@@ -32,9 +34,22 @@ module ParkingLot
         cars.map(&:position).join(', ')
       end
 
+      # expect to get only one car 
+      # to keep same interface we are passing
+      # an Array with one element
+      def slot_number_by_license_plate
+        cars.map(&:position).join('')
+      end
+
       private 
         def cars_by_color
-          data.compact.select{|d| d.color == color }
+          return data if @color.empty?
+          data.compact.select{|slot| slot.color == color }
+        end
+
+        def cars_by_license_plate
+          return data if @license_plate.empty?
+          data.compact.select{|slot| slot.license_plate == license_plate }
         end
     end
 

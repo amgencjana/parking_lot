@@ -12,6 +12,7 @@ RSpec.describe ParkingLot::CommandStrategy, type: :aruba do
     it { is_expected.to include(ParkingLot::Commands::Status) }
     it { is_expected.to include(ParkingLot::Commands::RegistrationNumberForColour) }
     it { is_expected.to include(ParkingLot::Commands::SlotsNumberForColour) }
+    it { is_expected.to include(ParkingLot::Commands::SlotNumberForRegistration) }
   end
 
   describe 'CommandsStrategy' do 
@@ -171,6 +172,28 @@ STATUSTEXT
 
       it 'finds proper Command based on the input' do
         expect(subject.command).to be_kind_of(ParkingLot::Commands::SlotsNumberForColour)
+      end
+    end
+
+
+    describe 'Slot Number Based on License plate Command' do 
+      let(:create_parking) { 'create_parking_lot 6'}
+      let(:park_car_1)  { 'park AMG_C63 White'}
+      
+      before do 
+        ParkingLot::CommandStrategy.new(create_parking).command.execute
+        ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+      end
+
+      let(:command_txt) { 'slot_number_for_registration_number AMG_C63'}
+
+      it 'finds proper Command based on the License platenput' do
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::SlotNumberForRegistration)
+        
+      end
+
+      it 'return value of the parking slot based on the License plate' do
+        expect(subject.command.execute).to eql("1")
       end
     end
 

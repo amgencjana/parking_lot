@@ -4,7 +4,7 @@ RSpec.describe ParkingLot::Commands::Status, type: :aruba do
 
   describe 'CommandsStrategy' do 
 
-    describe 'Create Parking Lot Command' do 
+    describe 'Status Command' do 
       let(:command_txt) { 'status'}
       subject { described_class.new(command_txt) }
 

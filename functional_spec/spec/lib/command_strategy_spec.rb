@@ -10,6 +10,7 @@ RSpec.describe ParkingLot::CommandStrategy, type: :aruba do
     it { is_expected.to include(ParkingLot::Commands::ParkCar) }
     it { is_expected.to include(ParkingLot::Commands::LeavePosition) }
     it { is_expected.to include(ParkingLot::Commands::Status) }
+    it { is_expected.to include(ParkingLot::Commands::RegistrationNumberForColours) }
   end
 
   describe 'CommandsStrategy' do 
@@ -128,6 +129,42 @@ STATUSTEXT
       end
     end
    
+
+    describe 'Registration Number For Colours a Car Command' do 
+      let(:create_parking) { 'create_parking_lot 6'}
+      let(:park_car_1)  { 'park AMG_C63 White'}
+      
+      before do 
+        ParkingLot::CommandStrategy.new(create_parking).command.execute
+        ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+      end
+
+      let(:command_txt) { 'registration_numbers_for_cars_with_colour White'}
+
+      it 'finds proper Command based on the input' do
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::RegistrationNumberForColours)
+        expect(subject.command.execute).to eql("AMG_C63")
+      end
+
+      context 'Park multiple cars' do
+        let(:create_parking) { 'create_parking_lot 6'}
+        let(:park_car_1) { 'park AMG_C63 White'}
+        let(:park_car_2) { 'park BMW_430 White'}
+
+        before do 
+          ParkingLot::CommandStrategy.new(create_parking).command.execute 
+          ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+          ParkingLot::CommandStrategy.new(park_car_2).command.execute 
+        end
+        
+        let(:command_txt) { 'registration_numbers_for_cars_with_colour White'}
+
+        it 'returns licence plates of found cars' do
+          expect(subject.command.execute).to eql("AMG_C63, BMW_430")
+        end
+      end
+    end
+
   end
 
   

@@ -61,28 +61,40 @@ EOTXT
 
     it "interactive input" do
       command = run("parking_lot")
-      commands.each {|cmd| command.write(cmd)}
+      commands.each {|cmd| command.write(cmd) }
       stop_all_commands
       expect(command.stdout).to eq(expected)
     end
 
-    describe 'my approach' do 
+    describe 'ongoing commands' do 
 
       let(:output) do
 <<-MYARGS
 Created a parking lot with 6 slots
-Created a parking lot with 2 slots
 Allocated slot number: 1
+Allocated slot number: 2
+Allocated slot number: 3
+Allocated slot number: 4
+Slot number 3 is free
+CAR_AMG, KA-01-HH-9999, KA-01-P-333
+Slot number 2 is free
+CAR_AMG, KA-01-P-333
 MYARGS
       end
 
-      it 'interactive go input' do
+      it 'interactive input for ongoing commands' do
         command = run("parking_lot")
         
         command.write("create_parking_lot 6\n")
-        command.write("create_parking_lot 2\n")
         command.write("park CAR_AMG White\n")
-        
+        command.write("park KA-01-HH-9999 White\n")
+        command.write("park KA-01-BB-0001 Black\n")
+        command.write("park KA-01-P-333 White\n")
+        command.write("leave 3\n")
+        command.write("registration_numbers_for_cars_with_colour White\n")
+        command.write("leave 2\n")
+        command.write("registration_numbers_for_cars_with_colour White\n")
+
         stop_all_commands
         
         expect(command.stdout).to eq(output)

@@ -195,6 +195,14 @@ STATUSTEXT
       it 'return value of the parking slot based on the License plate' do
         expect(subject.command.execute).to eql("1")
       end
+
+      context 'Not found' do
+        let(:command_txt) { 'slot_number_for_registration_number SG_NOT_FOUND'}
+
+        it 'returns Not found' do
+          expect(subject.command.execute).to eql("Not found")
+        end
+      end
     end
 
   end

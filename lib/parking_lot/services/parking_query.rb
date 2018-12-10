@@ -38,6 +38,7 @@ module ParkingLot
       # to keep same interface we are passing
       # an Array with one element
       def slot_number_by_license_plate
+        return 'Not found' if cars.empty?
         cars.map(&:position).join('')
       end
 

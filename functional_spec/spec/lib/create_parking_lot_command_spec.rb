@@ -54,6 +54,30 @@ RSpec.describe ParkingLot::Commands::CreateParkingLotCommand, type: :aruba do
         it 'generatates desitable output' do
           expect(subject.execute).to eql("Created a parking lot with 4 slots\n")
         end
+
+        context 'Does not allow to park car over capacity' do 
+          subject { ParkingLot::CommandStrategy.new(command_txt) }
+          let(:create_parking) { 'create_parking_lot 3'}
+
+          let(:park_car_1)  { 'park AMG_C63 White'}
+          let(:park_car_2)  { 'park BMW_430 Silver'}
+          let(:park_car_3)  { 'park BMW_M4  White'}
+          let(:park_car_4)  { 'park ZHR_210207 White'}
+          let(:park_car_over_capacity) { ParkingLot::CommandStrategy.new(park_car_4).command.execute  }
+          
+          before do 
+            ParkingLot::CommandStrategy.new(create_parking).command.execute 
+            ParkingLot::CommandStrategy.new(park_car_1).command.execute 
+            ParkingLot::CommandStrategy.new(park_car_2).command.execute 
+            ParkingLot::CommandStrategy.new(park_car_3).command.execute 
+          end
+
+          it 'returns Full Parking' do
+            expect(park_car_over_capacity).to eql("Sorry, parking lot is full\n")
+          end
+
+
+        end
       end
 
     end

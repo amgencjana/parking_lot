@@ -19,8 +19,11 @@ module ParkingLot
 
       def execute
         parking = Parking.current
-        slot_number = parking.allocate(car)
-        "Allocated slot number: #{slot_number}\n"
+        if slot_number = parking.allocate(car)
+          "Allocated slot number: #{slot_number}\n"
+        else
+          "Sorry, parking lot is full\n"
+        end
       end
 
       private 

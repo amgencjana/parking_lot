@@ -21,6 +21,9 @@ module ParkingLot
         @license_plate = args.fetch(:license_plate){ '' }
       end
 
+
+      # there is a huge potential to extract namespace Queries 
+      # and to have 2 dediated Query Objects one for each type
       def cars
         return cars_by_license_plate unless @license_plate.empty?
         cars_by_color

@@ -25,8 +25,6 @@ module ParkingLot
     end
 
     def allocate(car)
-      return false if parking_full?
-      
       position = find_free_spot
       car[:position] = position
 
@@ -45,10 +43,6 @@ module ParkingLot
       return false if parking_full?
       slots.index(nil) + 1
     end
-
-    def status
-    end
-
     
     def parking_full?
       !any_free_space?

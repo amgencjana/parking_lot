@@ -1,6 +1,6 @@
 module ParkingLot
   module Commands
-    class RegistrationNumberForColours
+    class RegistrationNumberForColour
 
       class << self
         def match(cmd)

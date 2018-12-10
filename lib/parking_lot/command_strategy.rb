@@ -2,7 +2,8 @@ require_relative 'commands/create_parking_lot_command'
 require_relative 'commands/park_car'
 require_relative 'commands/leave_position'
 require_relative 'commands/status'
-require_relative 'commands/registration_number_for_colours'
+require_relative 'commands/registration_number_for_colour'
+require_relative 'commands/slots_number_for_colour'
 
 
 module ParkingLot
@@ -18,7 +19,8 @@ module ParkingLot
       Commands::ParkCar, 
       Commands::LeavePosition, 
       Commands::Status,
-      Commands::RegistrationNumberForColours 
+      Commands::RegistrationNumberForColour,
+      Commands::SlotsNumberForColour 
     ]
 
     attr_accessor :command_txt, :commands

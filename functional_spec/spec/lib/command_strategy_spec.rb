@@ -10,7 +10,8 @@ RSpec.describe ParkingLot::CommandStrategy, type: :aruba do
     it { is_expected.to include(ParkingLot::Commands::ParkCar) }
     it { is_expected.to include(ParkingLot::Commands::LeavePosition) }
     it { is_expected.to include(ParkingLot::Commands::Status) }
-    it { is_expected.to include(ParkingLot::Commands::RegistrationNumberForColours) }
+    it { is_expected.to include(ParkingLot::Commands::RegistrationNumberForColour) }
+    it { is_expected.to include(ParkingLot::Commands::SlotsNumberForColour) }
   end
 
   describe 'CommandsStrategy' do 
@@ -142,7 +143,7 @@ STATUSTEXT
       let(:command_txt) { 'registration_numbers_for_cars_with_colour White'}
 
       it 'finds proper Command based on the input' do
-        expect(subject.command).to be_kind_of(ParkingLot::Commands::RegistrationNumberForColours)
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::RegistrationNumberForColour)
         expect(subject.command.execute).to eql("AMG_C63")
       end
 
@@ -162,6 +163,14 @@ STATUSTEXT
         it 'returns licence plates of found cars' do
           expect(subject.command.execute).to eql("AMG_C63, BMW_430")
         end
+      end
+    end
+
+    describe 'Slots Numbers For Colours Command' do 
+      let(:command_txt) { 'slot_numbers_for_cars_with_colour White'}
+
+      it 'finds proper Command based on the input' do
+        expect(subject.command).to be_kind_of(ParkingLot::Commands::SlotsNumberForColour)
       end
     end
 

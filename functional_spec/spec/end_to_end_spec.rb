@@ -59,7 +59,7 @@ EOTXT
       expect(command.stdout).to eq(expected)
     end
 
-    xit "interactive input" do
+    it "interactive input" do
       command = run("parking_lot")
       commands.each {|cmd| command.write(cmd)}
       stop_all_commands

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe ParkingLot::Commands::RegistrationNumberForColour, type: :aruba do
+RSpec.describe ParkingLot::Commands::SlotsNumberForColour, type: :aruba do
 
 
-  describe 'Registration Numbers For Colours Command' do 
-    let(:command_txt) { 'registration_numbers_for_cars_with_colour White'}
+  describe 'Slots Numbers For Colours Command' do 
+    let(:command_txt) { 'slot_numbers_for_cars_with_colour White'}
     subject { described_class.new(command_txt) }
 
 
@@ -33,8 +33,8 @@ RSpec.describe ParkingLot::Commands::RegistrationNumberForColour, type: :aruba d
       end
 
 
-      it 'finds Registration Numbers based on the colour' do
-        expect(subject.execute).to eql('AMG_C63, BMW_M4')
+      it 'finds Slots Numbers based on the colour' do
+        expect(subject.execute).to eql('1, 3')
       end
     end
   end

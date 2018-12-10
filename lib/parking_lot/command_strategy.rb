@@ -14,6 +14,7 @@ module ParkingLot
   # class responsible for orchestrating and recognising to which specific class delegat execution of command 
   # usage of the Open Close principle allows to make in the easy way extend number of commands 
   # and ease of handling different variants of existing ones 
+  #
   class CommandStrategy
     AVAILABLE_COMMANDS = [
       Commands::CreateParkingLotCommand, 

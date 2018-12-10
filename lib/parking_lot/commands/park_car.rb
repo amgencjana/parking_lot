@@ -19,11 +19,9 @@ module ParkingLot
 
       def execute
         parking = Parking.current
-        if slot_number = parking.allocate(car)
-          "Allocated slot number: #{slot_number}\n"
-        else
-          "Sorry, parking lot is full\n"
-        end
+        service = Services::ParkingService.new(parking, car)
+        
+        service.park_car!
       end
 
       private 

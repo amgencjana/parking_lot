@@ -8,6 +8,7 @@ module ParkingLot
     attr_accessor :command
 
     def initialize( args ) 
+      # handle openning and parsing File as an argument
     end
 
     def execute

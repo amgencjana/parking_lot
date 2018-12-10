@@ -1,8 +1,10 @@
 module ParkingLot
   # Parking
+  # 
   # domain class which is responsible for executing majority of
   # the functionalities like add / removing items 
   # to park unpark car on the first available slot
+  # 
   class Parking
     attr_accessor :number_of_slots, :slots, :payload
 
@@ -47,10 +49,12 @@ module ParkingLot
     def status
     end
 
-    private
+    
     def parking_full?
       !any_free_space?
     end
+
+    private
 
     def any_free_space?
       slots.any?{|slot| slot.nil? }

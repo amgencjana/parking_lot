@@ -5,13 +5,13 @@ module ParkingLot
   # currenly being place in Parking domain class
   module Services
 
-    # ParkingService class 
+    # ParkCarService class 
     # main responsibility is to execute certain acions on parking like, 
     # delegating business logic to the domain objects vide. MartinFowlerWay
     # + park_car() to allocate a car
-    # + release() to release a parking spot
     # 
-    class ParkingService
+    # 
+    class ParkCarService
       attr_accessor :parking, :car
 
       def initialize(parking, car)

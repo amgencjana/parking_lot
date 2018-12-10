@@ -19,7 +19,7 @@ module ParkingLot
 
       def execute
         parking = Parking.current
-        service = Services::ParkingService.new(parking, car)
+        service = Services::ParkCarService.new(parking, car)
         
         service.park_car!
       end

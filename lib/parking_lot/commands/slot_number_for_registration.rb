@@ -18,7 +18,7 @@ module ParkingLot
       def execute
         parking = Parking.current
 
-        query = ParkingLot::Services::ParkingQuery.new(parking, license_plate: license_plate)
+        query = ParkingLot::Queries::ParkingQuery.new(parking, license_plate: license_plate)
         query.slot_number_by_license_plate
       end
 

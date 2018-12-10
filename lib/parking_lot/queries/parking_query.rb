@@ -1,9 +1,9 @@
 module ParkingLot
   
-  # Services module: 
-  # namespace which can encapsulate all 'logic'
-  # currenly being place in Parking class
-  module Services
+  # Query module: 
+  # namespace which can encapsulate all 'queries'
+  # related to the Parking data
+  module Queries
 
     # ParkingQuery class 
     # main responsibility is to encapsulate various types of queries / searches

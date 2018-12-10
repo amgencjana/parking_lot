@@ -18,7 +18,7 @@ module ParkingLot
       def execute
         parking = Parking.current
 
-        query = ParkingLot::Services::ParkingQuery.new(parking, color: color)
+        query = ParkingLot::Queries::ParkingQuery.new(parking, color: color)
         query.registration_number_for_colours
       end
 

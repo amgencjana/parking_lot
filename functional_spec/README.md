@@ -55,13 +55,16 @@ There is an potential for further refactorisation like:
     and to have 2 dediated Query Objects one for each type
 
   Models: 
+    Considering factors which I have decided to focus on (1) to have flexible, well tested solution,
+      and the time limitation, also fact that it can be  easily done without dedicated models as they
+      dont really contains a business logic, and data which they represent is realievly simple, 
+      current solution has simplified version of models.
+
     Parking 
       contains Domain logic, as being majority of operations are being executed from its level.
       Considering test suite covering current implementation, and well defined interfaces of classes
       it would be relatively easy to swap storage to the persisante class with help of some ORM,
       and model real classes responsible for ParkingSlot, Car, Ticket, introduce some logging system.
-      Considering factors which I have decided to focus on (1) to have flexible, well tested solution,
-      and the time limitation, current solution has simplified version of models.
 
     Report
       simple formatting of the report's table

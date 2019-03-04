@@ -7,4 +7,4 @@
 
 require_relative '../lib/parking_lot'
 
-ParkingLot::Command.new( ARGV ).execute
+ParkingLot::Command.new( ARGV.first ).execute

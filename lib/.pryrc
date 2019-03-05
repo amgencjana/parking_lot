@@ -1,0 +1,2 @@
+$: << '.'
+require 'parking_lot'

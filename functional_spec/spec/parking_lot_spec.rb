@@ -37,5 +37,4 @@ EOTXT
 )
   end
   
-  pending "add more specs as needed"
 end

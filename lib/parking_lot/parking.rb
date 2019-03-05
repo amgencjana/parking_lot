@@ -48,8 +48,6 @@ module ParkingLot
       !any_free_space?
     end
 
-    private
-
     def any_free_space?
       slots.any?{|slot| slot.nil? }
     end
